@@ -1,2 +1,140 @@
-# Trabalho-Academico-Banco-de-Dados-1
-Um projeto sobre como funciona Boletins de ocorrencia e Inqueritos nas delegacias. Com pesquisa de campo o Grupo desenvolve uma Atividade para por as habilidades sobre banco de dados em ação. 
+# Entrega 1 — Modelo Conceitual (DER)
+### Modelagem de um sistema de gestão de informações para uma organização de pequeno porte
+
+> Este arquivo é o esqueleto do **README.md** do repositório GitHub do seu grupo.
+> Preencha cada seção abaixo. Não apague os títulos — apenas substitua as instruções em *itálico* pelo conteúdo do seu projeto.
+> O **DER** é anexado separadamente ao repositório (em imagem), mas sua justificativa entra neste README.
+>
+> **A organização escolhida pode ser de qualquer natureza:** empresa com fins lucrativos (livraria, lanchonete, pet shop), ONG, associação comunitária, cooperativa, instituições religiosas/comunitárias como igrejas, terreiros de religiões de matriz africana (candomblé, umbanda) ou outras. O que muda de um tipo para outro são os processos e as regras específicas — a estrutura do trabalho (levantamento de requisitos, modelagem conceitual, DER) é a mesma para todas. Termos como "empresa" e "negócio" usados abaixo devem ser lidos de forma ampla, no sentido técnico de modelagem de dados (ex.: "regras de negócio" = regras de funcionamento da organização, seja ela comercial, religiosa ou social).
+>
+> **Importante:** a organização precisa **existir de fato** — não é permitido inventar uma organização fictícia. O levantamento de requisitos e regras de negócio deve ser feito por meio de **pesquisa de campo na própria organização** (visitas, entrevistas com responsáveis, observação dos processos reais), então o grupo só deve escolher uma organização à qual **realmente tenha acesso**. Ao escolher, tomem cuidado com o porte: **nem tão pequena** que não gere dados suficiente para o trabalho (poucos processos, poucas entidades), **nem tão grande/complexa** que fique inviável de modelar nesta primeira etapa do curso.
+
+---
+
+## Metadados
+
+- **EDUARDO VINICIUS RIBEIRO COSTA 48693855, ENZO FREIRE DOS SANTOS 47806303, GIOVANNA RIBEIRO SOUZA 47952822, JOÃO VICTOR DA COSTA SILVA 49227238,PAULO HENRIQUE CAMILO DE PASCOA SOUZA 47806745. **
+
+## 1. Caracterização da Organização
+*(vale 7,5% — Dimensão Conceitual)*
+
+- **Nome e natureza da organização:** Distrito Policial 52°, Parque São Jorge.
+- **Contexto e porte:** O Distrito Policial 52º, localizado no Parque São Jorge, é uma organização pública e sem fins lucrativos responsável pelo atendimento de ocorrências policiais e pelo desenvolvimento de atividades de investigação na região. Sua operação envolve profissionais como delegados, escrivães, investigadores e servidores administrativos. O distrito realiza atendimentos presenciais, registros de boletins de ocorrência, abertura e acompanhamento de investigações, emissão de documentos e demais procedimentos policiais. O número exato de colaboradores e o volume médio de atendimentos devem ser confirmados por meio da pesquisa de campo realizada pelo grupo.
+- **Problemas e necessidades identificados:** Uma grande demanda, de casos na região que são considerados de pequeno porte, sendo categorizado como um atraso em grandes buscas interferindo diretamete na eficiencia do de partamento policial.
+- **Justificativa da escolha:** O grande interrese em auxiliar na velocidade da rezoluçao, dos casos de frequencia de furto, estelionado e calunia e difamação aos redores.
+- **Evidências da organização:** *comprove que a organização existe e que o grupo teve acesso a ela — ex.: fotos do local/da visita, link da organização no Google (Google Maps/Google Meu Negócio, site, rede social), endereço completo e forma de contato (telefone, e-mail, responsável pela organização).*
+
+---
+
+## 2. Processos de Negócio
+*(vale 10% — Dimensão Procedimental)*
+
+- **Principais processos mapeados:** Os principais são: Registro de ocorrencia, Inquerito, Diligencia e Investigação.  
+- **Fluxogramas:** (Opcional) *represente visualmente pelo menos os processos-chave (imagens anexadas). Deve ficar claro o fluxo de cada processo e como eles se integram entre si.*
+
+---
+
+## 3. Requisitos do Sistema
+RF01 — Cadastro de ocorrência: o sistema deve permitir que um usuário autorizado registre uma nova ocorrência, informando data, local, tipo e descrição do fato.
+RNF01 — Segurança: o sistema deve permitir o acesso aos registros somente após autenticação do usuário.
+
+### 3.1 Requisitos Funcionais
+Sua principal função deve ser filtrar e categorizar Boletins de ocorrencia e inqueritos, para que priorize casos de grande Periculosidade.
+
+### 3.2 Requisitos Não Funcionais
+O sistema deverá garantir desempenho e a usabilidadedas. Deverá possuir uma interface agil, com facil responsividade às consultas em tempo hábil, manter os dados disponíveis durante o expediente do distrito e registrar o histórico de alterações realizadas nos registros.
+
+---
+
+## 4. Regras de Negócio
+*(esta seção DIVIDE com a Seção 3 "Requisitos do Sistema" os mesmos 7,5% da dimensão conceitual — juntas valem 7,5%, não 7,5% cada — + 4% exclusivos desta seção na documentação. "Regras de negócio" é o termo técnico usado em modelagem de dados para as regras de funcionamento de qualquer organização, com ou sem fins lucrativos)*
+
+- **Regras operacionais:** *condições que a organização impõe (ex.: "um pedido só pode ser fechado se houver estoque disponível", "uma doação só pode ser registrada com identificação do doador", "um ritual só pode ser agendado se o espaço estiver disponível").*
+- **Restrições organizacionais:** *limitações que afetam o modelo (ex.: políticas internas, prazos, exigências legais, normas religiosas ou estatutárias) — e por que elas importam.*
+
+---
+
+## 5. Dicionário de Dados Conceitual (Preliminar)
+*(vale 10% — Dimensão Procedimental - Segue o modelo do arquivo 02-03g_Exemplo_Dicionario_Dados.pdf)*
+
+Para cada entidade identificada, liste:
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| *nome do atributo* | *o que ele representa* | *se houver alguma regra (obrigatoriedade, valores possíveis, etc.)* |
+
+*Mantenha o dicionário organizado e padronizado (mesmo formato de tabela para todas as entidades).*
+
+**Atenção à privacidade:** se forem usados exemplos de valores para ilustrar os atributos, esses exemplos devem ser **fictícios** — não utilize dados reais de clientes, fiéis, beneficiários, doadores ou funcionários da organização (nomes, CPFs, contatos etc.), mesmo que tenham sido observados durante a pesquisa de campo. Os exemplos devem apenas ser **coerentes com as operações reais** observadas.
+
+---
+
+## 6. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)-----------------
+*(vale 7,5% na dimensão conceitual)*
+
+- **Entidades reconhecidas:** Pessoa; ocorrencia; Inquerito; Depoimento; evidencia; Delegado; Escrivão e Delegacia.
+- **Atributos e classificações:**---------------- *quais atributos pertencem a cada entidade.*
+- **Relacionamentos pertinentes:** Pessoa-Ocorrencia; Ocorrencia-Inquerito; Inquerito-Depoimento; Inquerito-Evidencia; Delegado-Inquerito; Escrivão-Inquerito; Inquerito-Delegacia e Ocorrencia-Delegacia.
+- **Restrições e políticas organizacionais aplicadas ao modelo.**
+Apenas usuários autorizados podem acessar e alterar os dados. As informações devem ser sigilosas, os registros devem ser auditados e os dados utilizados nos exemplos devem ser fictícios.
+---
+
+## 7. Diagrama Entidade-Relacionamento (DER)
+*(vale 20% — é o item de maior peso da entrega)*
+
+- Anexe o DER (em imagem).
+- O diagrama deve representar corretamente:
+  - Entidades
+  - Atributos
+  - Relacionamentos
+  - **Cardinalidades**
+- O modelo deve ser **consistente** e já demonstrar potencial de **escalabilidade e integração** (pensando nas próximas etapas do projeto).
+
+---
+
+## 8. Justificativa Técnica
+*(vale 7,5% — sozinho, é o subcritério de maior peso dentro da Dimensão Conceitual)*
+
+*Explique e defenda as decisões de abstração e modelagem tomadas: por que essas entidades, esses atributos, esses relacionamentos e essas cardinalidades — e não outras alternativas possíveis?*
+
+---
+
+## 9. Uso de Inteligência Artificial ------------------
+*(documentação obrigatória — não é opcional se o grupo usou IA em qualquer etapa: pesquisa, escrita, organização de ideias ou revisão de texto)*
+
+Se o grupo usou alguma ferramenta de IA (ChatGPT, Claude, Gemini, Perplexity etc.) em qualquer parte do trabalho, registre **para cada uso relevante**:
+
+| Item | O que registrar |
+|------|------------------|
+| **Ferramenta e etapa** | Qual IA foi usada e em qual parte do trabalho (ex.: pesquisa sobre o setor da organização, redação do README, organização dos requisitos, revisão ortográfica/gramatical). |
+| **Motivação** | Por que o grupo recorreu à IA nesse ponto específico. |
+| **Prompt(s) utilizados** | Texto exato (ou muito próximo) do que foi perguntado/pedido à IA. |
+| **Resposta recebida** | Resumo ou trecho relevante da resposta da IA. |
+| **Fontes consultadas e verificadas** | Se a IA citou fontes/dados, quais foram checadas pelo grupo e como (ex.: comparação com o que foi observado na visita de campo). |
+| **Trechos rejeitados ou corrigidos** | O que da resposta da IA foi descartado, editado ou corrigido manualmente, e por quê. |
+| **Justificativa da escolha final** | Por que o grupo manteve, adaptou ou rejeitou o que a IA sugeriu. |
+| **Reflexão crítica** | Limites, vieses ou erros identificados no uso da IA nessa etapa (ex.: informação desatualizada, alucinação, generalização incorreta sobre o tipo de organização). |
+
+*Se o grupo não usou nenhuma ferramenta de IA, declare isso explicitamente nesta seção.*
+
+---
+
+## Critérios Atitudinais (20%)
+**Estes critérios NÃO constam explicitamente como item de entrega no README.** Eles são avaliados por meio de **Avaliação 360º entre os integrantes do grupo** (cada membro avalia os colegas de equipe) e, no caso da Colaboração, também pela **colaboração equilibrada no histórico de commits** do repositório GitHub — não pela leitura do restante do repositório nem pela apresentação:
+
+- **Participação (5%):** envolvimento nas discussões técnicas e nas decisões do grupo.
+- **Comprometimento (5%):** cumprimento de prazos e responsabilidades assumidas.
+- **Colaboração (5%):** respeito às contribuições dos colegas, cooperação na construção do projeto e colaboração equilibrada no histórico de commits do repositório GitHub.
+- **Autonomia (5%):** busca independente de soluções e proposta de melhorias.
+
+---
+
+## Resumo dos Pesos
+
+| Dimensão | Peso total |
+|----------|-----------|
+| Conceitual (contexto, requisitos/regras, modelagem, justificativa técnica) | 30% |
+| Procedimental (requisitos, fluxogramas, dicionário de dados, DER) | 50% |
+| Atitudinal (participação, comprometimento, colaboração, autonomia) | 20% |
+
+**Entrega final:** README.md completo + DER + Dicionário de Dados em HTML (com exceção dos cursos GTI) anexado no repositório GitHub do grupo.
