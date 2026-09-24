@@ -20,18 +20,16 @@
 - *PAULO HENRIQUE CAMILO DE PASCOA SOUZA 47806745*
 
 ## 1. Caracterização da Organização
-*(vale 7,5% — Dimensão Conceitual)*
 
 - **Nome e natureza da organização:** Distrito Policial 52°, Parque São Jorge.
 - **Contexto e porte:** O Distrito Policial 52º, localizado no Parque São Jorge, é uma organização pública e sem fins lucrativos responsável pelo atendimento de ocorrências policiais e pelo desenvolvimento de atividades de investigação na região. Sua operação envolve profissionais como delegados, escrivães, investigadores e servidores administrativos. O distrito realiza atendimentos presenciais, registros de boletins de ocorrência, abertura e acompanhamento de investigações, emissão de documentos e demais procedimentos policiais. O número exato de colaboradores e o volume médio de atendimentos devem ser confirmados por meio da pesquisa de campo realizada pelo grupo.
 - **Problemas e necessidades identificados:** Uma grande demanda, de casos na região que são considerados de pequeno porte, sendo categorizado como um atraso em grandes buscas interferindo diretamete na eficiencia do de partamento policial.
 - **Justificativa da escolha:** O grande interrese em auxiliar na velocidade da rezoluçao, dos casos de frequencia de furto, estelionado e calunia e difamação aos redores.
-- **Evidências da organização:** *comprove que a organização existe e que o grupo teve acesso a ela — ex.: fotos do local/da visita, link da organização no Google (Google Maps/Google Meu Negócio, site, rede social), endereço completo e forma de contato (telefone, e-mail, responsável pela organização).*
+- **Evidências da organização:** R. Dr. Coryntho Baldoíno Costa, 400 - Vila Zilda, São Paulo - SP, 03069-070
 
 ---
 
 ## 2. Processos de Negócio
-*(vale 10% — Dimensão Procedimental)*
 
 - **Principais processos mapeados:** Os principais são: Registro de ocorrencia, Inquerito, Diligencia e Investigação.  
 - **Fluxogramas:** (Opcional) *represente visualmente pelo menos os processos-chave (imagens anexadas). Deve ficar claro o fluxo de cada processo e como eles se integram entre si.*
