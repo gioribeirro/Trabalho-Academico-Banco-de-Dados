@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Script SQL V2 — 52º Distrito Policial - Parque São Jorge</title>
+<style>
+  :root {
+    --bg: #000000;
+    --card-bg: #0a0a0a;
+    --text: #e7e9ee;
+    --muted: #9aa1ad;
+    --accent: #8fb8ff;
+    --accent-soft: #16233a;
+    --border: #262626;
+    --code-bg: #000000;
+    --code-text: #e6e9ef;
+    --code-comment: #7d8798;
+    --code-keyword: #7fb4ff;
+    --code-string: #c3e88d;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #000000;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  header {
+    background: #000000;
+    border-bottom: 1px solid var(--border);
+    color: #fff;
+    padding: 2.2rem 1.5rem 1.8rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 700;
+  }
+  header p {
+    margin: 0.15rem 0;
+    opacity: 0.92;
+    font-size: 0.95rem;
+  }
+  .badge {
+    display: inline-block;
+    margin-top: 0.6rem;
+    background: rgba(255,255,255,0.18);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+  }
+  main {
+    max-width: 980px;
+    margin: -1.2rem auto 3rem;
+    padding: 0 1.2rem;
+  }
+  nav.toc {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  nav.toc h2 {
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  nav.toc ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    columns: 2;
+    gap: 1.5rem;
+  }
+  nav.toc li { margin-bottom: 0.35rem; break-inside: avoid; }
+  nav.toc a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.92rem;
+  }
+  nav.toc a:hover { text-decoration: underline; }
+
+  section.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.4rem 1.1rem;
+    margin-bottom: 1.3rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  section.card h2 {
+    margin: 0 0 0.2rem;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  section.card h2 .tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 1rem 1.1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.86rem;
+    margin: 0.7rem 0 0;
+    line-height: 1.55;
+  }
+  code { font-family: "SF Mono", "Fira Code", Consolas, Menlo, monospace; }
+  .kw { color: var(--code-keyword); font-weight: 600; }
+  .cm { color: var(--code-comment); font-style: italic; }
+  .str { color: var(--code-string); }
+
+  table.schema {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+  }
+  table.schema th, table.schema td {
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+  }
+  table.schema th {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .grid-tables {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  .entity {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .entity h3 {
+    margin: 0;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+  }
+  .entity ul {
+    margin: 0;
+    padding: 0.5rem 0.9rem;
+    list-style: none;
+    font-size: 0.8rem;
+  }
+  .entity li { padding: 0.15rem 0; color: var(--muted); }
+  .entity li b { color: var(--text); }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 1.5rem;
+  }
+  .wrap-x { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Script SQL V2 — Banco de Dados</h1>
+  <p>52º Distrito Policial — Parque São Jorge</p>
+  <p style="font-size:0.85rem;">Versão atualizada do projeto · Dados de teste fictícios</p>
+  <span class="badge">PROJETO ACADÊMICO · BANCO DE DADOS</span>
+</header>
+
+<main>
+
+  <nav class="toc">
+    <h2>Conteúdo</h2>
+    <ol>
+      <li><a href="#schema">Visão geral das tabelas</a></li>
+      <li><a href="#ddl">Criação do banco e tabelas (DDL)</a></li>
+      <li><a href="#inserts">Dados fictícios (INSERT)</a></li>
+      <li><a href="#consultas">Consultas (SELECT)</a></li>
+      <li><a href="#update">Atualização (UPDATE)</a></li>
+      <li><a href="#delete">Exclusão de teste (DELETE)</a></li>
+      <li><a href="#gerenciais">Consultas gerenciais</a></li>
+      <li><a href="#auditoria">Auditoria e pendências</a></li>
+    </ol>
+  </nav>
+
+  <section class="card" id="schema">
+    <h2>Visão geral das tabelas <span class="tag">Modelo</span></h2>
+    <p style="color:var(--muted); margin-top:0.3rem;">Nove entidades compõem o banco <code>db_52dp_v2</code>, cobrindo unidade policial, servidores, pessoas envolvidas, ocorrências, inquéritos, depoimentos, evidências e movimentações.</p>
+    <div class="grid-tables">
+      <div class="entity">
+        <h3>UNIDADE_POLICIAL</h3>
+        <ul><li><b>id_unidade</b> (PK)</li><li>nome, endereco</li><li>tipo_unidade, cidade</li></ul>
+      </div>
+      <div class="entity">
+        <h3>SERVIDOR</h3>
+        <ul><li><b>id_servidor</b> (PK)</li><li>id_unidade (FK)</li><li>nome_ficticio, cargo, matricula_ficticia</li></ul>
+      </div>
+      <div class="entity">
+        <h3>PESSOA</h3>
+        <ul><li><b>id_pessoa</b> (PK)</li><li>nome_ficticio, documento_ficticio</li><li>observacao, contato_ficticio</li></ul>
+      </div>
+      <div class="entity">
+        <h3>NATUREZA_FATO</h3>
+        <ul><li><b>id_natureza</b> (PK)</li><li>descricao, gravidade</li></ul>
+      </div>
+      <div class="entity">
+        <h3>OCORRENCIA</h3>
+        <ul><li><b>id_ocorrencia</b> (PK)</li><li>id_unidade, id_natureza, id_servidor_registro (FKs)</li><li>canal_registro, data_registro, localidade, status, relato_fatos</li></ul>
+      </div>
+      <div class="entity">
+        <h3>ENVOLVIMENTO_OCORRENCIA</h3>
+        <ul><li><b>id_pessoa + id_ocorrencia</b> (PK composta)</li><li>papel</li></ul>
+      </div>
+      <div class="entity">
+        <h3>INQUERITO</h3>
+        <ul><li><b>id_inquerito</b> (PK)</li><li>id_ocorrencia (FK)</li><li>data_abertura, data_conclusao, status, prioridade</li></ul>
+      </div>
+      <div class="entity">
+        <h3>DEPOIMENTO</h3>
+        <ul><li><b>id_depoimento</b> (PK)</li><li>id_inquerito, id_pessoa (FKs)</li><li>data_depoimento, resumo_ficticio</li></ul>
+      </div>
+      <div class="entity">
+        <h3>EVIDENCIA</h3>
+        <ul><li><b>id_evidencia</b> (PK)</li><li>id_inquerito (FK)</li><li>tipo_evidencia, descricao, data_apreensao, status_custodia</li></ul>
+      </div>
+      <div class="entity">
+        <h3>MOVIMENTACAO</h3>
+        <ul><li><b>id_movimentacao</b> (PK)</li><li>id_inquerito, id_servidor (FKs)</li><li>data_movimentacao, tipo_movimentacao, descricao</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ddl">
+    <h2>Criação do banco e tabelas <span class="tag">DDL</span></h2>
+    <div class="wrap-x">
+<pre><code><span class="kw">CREATE DATABASE</span> db_52dp_v2;
+<span class="kw">USE</span> db_52dp_v2;
+
+<span class="kw">CREATE TABLE</span> UNIDADE_POLICIAL (
+    id_unidade INT <span class="kw">PRIMARY KEY</span>,
+    nome VARCHAR(120) <span class="kw">NOT NULL</span>,
+    endereco VARCHAR(150) <span class="kw">NOT NULL</span>,
+    tipo_unidade VARCHAR(60) <span class="kw">NOT NULL</span>,
+    cidade VARCHAR(80) <span class="kw">NOT NULL</span>
+);
+
+<span class="kw">CREATE TABLE</span> SERVIDOR (
+    id_servidor INT <span class="kw">PRIMARY KEY</span>,
+    id_unidade INT <span class="kw">NOT NULL</span>,
+    nome_ficticio VARCHAR(120) <span class="kw">NOT NULL</span>,
+    cargo VARCHAR(60) <span class="kw">NOT NULL</span>,
+    matricula_ficticia VARCHAR(20) <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> fk_servidor_unidade <span class="kw">FOREIGN KEY</span> (id_unidade)
+        <span class="kw">REFERENCES</span> UNIDADE_POLICIAL(id_unidade)
+);
+
+<span class="kw">CREATE TABLE</span> PESSOA (
+    id_pessoa INT <span class="kw">PRIMARY KEY</span>,
+    nome_ficticio VARCHAR(120) <span class="kw">NOT NULL</span>,
+    documento_ficticio VARCHAR(30) <span class="kw">NOT NULL</span>,
+    observacao VARCHAR(200),
+    contato_ficticio VARCHAR(20) <span class="kw">NOT NULL</span>
+);
+
+<span class="kw">CREATE TABLE</span> NATUREZA_FATO (
+    id_natureza INT <span class="kw">PRIMARY KEY</span>,
+    descricao VARCHAR(100) <span class="kw">NOT NULL</span>,
+    gravidade VARCHAR(20) <span class="kw">NOT NULL</span>
+);
+
+<span class="kw">CREATE TABLE</span> OCORRENCIA (
+    id_ocorrencia INT <span class="kw">PRIMARY KEY</span>,
+    id_unidade INT <span class="kw">NOT NULL</span>,
+    id_natureza INT <span class="kw">NOT NULL</span>,
+    id_servidor_registro INT <span class="kw">NOT NULL</span>,
+    canal_registro VARCHAR(20) <span class="kw">NOT NULL</span>,
+    data_registro DATETIME <span class="kw">NOT NULL</span>,
+    localidade VARCHAR(120) <span class="kw">NOT NULL</span>,
+    status VARCHAR(30) <span class="kw">NOT NULL</span>,
+    relato_fatos TEXT <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> fk_ocorrencia_unidade <span class="kw">FOREIGN KEY</span> (id_unidade)
+        <span class="kw">REFERENCES</span> UNIDADE_POLICIAL(id_unidade),
+    <span class="kw">CONSTRAINT</span> fk_ocorrencia_natureza <span class="kw">FOREIGN KEY</span> (id_natureza)
+        <span class="kw">REFERENCES</span> NATUREZA_FATO(id_natureza),
+    <span class="kw">CONSTRAINT</span> fk_ocorrencia_servidor <span class="kw">FOREIGN KEY</span> (id_servidor_registro)
+        <span class="kw">REFERENCES</span> SERVIDOR(id_servidor)
+);
+
+<span class="kw">CREATE TABLE</span> ENVOLVIMENTO_OCORRENCIA (
+    id_pessoa INT <span class="kw">NOT NULL</span>,
+    id_ocorrencia INT <span class="kw">NOT NULL</span>,
+    papel VARCHAR(30) <span class="kw">NOT NULL</span>,
+    <span class="kw">PRIMARY KEY</span> (id_pessoa, id_ocorrencia),
+    <span class="kw">CONSTRAINT</span> fk_envolvimento_pessoa <span class="kw">FOREIGN KEY</span> (id_pessoa)
+        <span class="kw">REFERENCES</span> PESSOA(id_pessoa),
+    <span class="kw">CONSTRAINT</span> fk_envolvimento_ocorrencia <span class="kw">FOREIGN KEY</span> (id_ocorrencia)
+        <span class="kw">REFERENCES</span> OCORRENCIA(id_ocorrencia)
+);
+
+<span class="kw">CREATE TABLE</span> INQUERITO (
+    id_inquerito INT <span class="kw">PRIMARY KEY</span>,
+    id_ocorrencia INT <span class="kw">NOT NULL</span>,
+    data_abertura DATE <span class="kw">NOT NULL</span>,
+    data_conclusao DATE,
+    status VARCHAR(30) <span class="kw">NOT NULL</span>,
+    prioridade VARCHAR(20) <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> fk_inquerito_ocorrencia <span class="kw">FOREIGN KEY</span> (id_ocorrencia)
+        <span class="kw">REFERENCES</span> OCORRENCIA(id_ocorrencia),
+    <span class="kw">CONSTRAINT</span> chk_datas_inquerito <span class="kw">CHECK</span> (
+        data_conclusao <span class="kw">IS NULL</span> <span class="kw">OR</span> data_conclusao &gt;= data_abertura
+    )
+);
+
+<span class="kw">CREATE TABLE</span> DEPOIMENTO (
+    id_depoimento INT <span class="kw">PRIMARY KEY</span>,
+    id_inquerito INT <span class="kw">NOT NULL</span>,
+    id_pessoa INT <span class="kw">NOT NULL</span>,
+    data_depoimento DATE <span class="kw">NOT NULL</span>,
+    resumo_ficticio VARCHAR(255) <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> fk_depoimento_inquerito <span class="kw">FOREIGN KEY</span> (id_inquerito)
+        <span class="kw">REFERENCES</span> INQUERITO(id_inquerito),
+    <span class="kw">CONSTRAINT</span> fk_depoimento_pessoa <span class="kw">FOREIGN KEY</span> (id_pessoa)
+        <span class="kw">REFERENCES</span> PESSOA(id_pessoa)
+);
+
+<span class="kw">CREATE TABLE</span> EVIDENCIA (
+    id_evidencia INT <span class="kw">PRIMARY KEY</span>,
+    id_inquerito INT <span class="kw">NOT NULL</span>,
+    tipo_evidencia VARCHAR(60) <span class="kw">NOT NULL</span>,
+    descricao VARCHAR(200) <span class="kw">NOT NULL</span>,
+    data_apreensao DATE <span class="kw">NOT NULL</span>,
+    status_custodia VARCHAR(30) <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> fk_evidencia_inquerito <span class="kw">FOREIGN KEY</span> (id_inquerito)
+        <span class="kw">REFERENCES</span> INQUERITO(id_inquerito)
+);
+
+<span class="kw">CREATE TABLE</span> MOVIMENTACAO (
+    id_movimentacao INT <span class="kw">PRIMARY KEY</span>,
+    id_inquerito INT <span class="kw">NOT NULL</span>,
+    id_servidor INT <span class="kw">NOT NULL</span>,
+    data_movimentacao DATE <span class="kw">NOT NULL</span>,
+    tipo_movimentacao VARCHAR(60) <span class="kw">NOT NULL</span>,
+    descricao VARCHAR(200) <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> fk_movimentacao_inquerito <span class="kw">FOREIGN KEY</span> (id_inquerito)
+        <span class="kw">REFERENCES</span> INQUERITO(id_inquerito),
+    <span class="kw">CONSTRAINT</span> fk_movimentacao_servidor <span class="kw">FOREIGN KEY</span> (id_servidor)
+        <span class="kw">REFERENCES</span> SERVIDOR(id_servidor)
+);</code></pre>
+    </div>
+  </section>
+
+  <section class="card" id="inserts">
+    <h2>Dados fictícios <span class="tag">INSERT</span></h2>
+    <div class="wrap-x">
+<pre><code><span class="cm">-- DADOS FICTÍCIOS</span>
+<span class="kw">INSERT INTO</span> UNIDADE_POLICIAL <span class="kw">VALUES</span>
+(1,<span class="str">'52º Distrito Policial - Parque São Jorge'</span>,
+<span class="str">'Endereço utilizado para fins acadêmicos'</span>,<span class="str">'Polícia Civil'</span>,<span class="str">'São Paulo - SP'</span>);
+
+<span class="kw">INSERT INTO</span> SERVIDOR <span class="kw">VALUES</span>
+(101,1,<span class="str">'Ana Lima'</span>,<span class="str">'Investigadora'</span>,<span class="str">'MAT-0101'</span>);
+
+<span class="kw">INSERT INTO</span> PESSOA <span class="kw">VALUES</span>
+(8001,<span class="str">'Marina Alves'</span>,<span class="str">'DOC-8001'</span>,<span class="str">'Comunicante fictícia'</span>,<span class="str">'11900000001'</span>);
+
+<span class="kw">INSERT INTO</span> NATUREZA_FATO <span class="kw">VALUES</span> (1,<span class="str">'Furto'</span>,<span class="str">'Média'</span>);
+
+<span class="kw">INSERT INTO</span> OCORRENCIA <span class="kw">VALUES</span>
+(5001,1,1,101,<span class="str">'Presencial'</span>,<span class="str">'2026-08-28 10:15:00'</span>,
+<span class="str">'Bairro Modelo (fictício)'</span>,<span class="str">'Convertida em inquérito'</span>,
+<span class="str">'Relato fictício dos fatos registrado de forma imparcial para fins acadêmicos.'</span>);
+
+<span class="kw">INSERT INTO</span> ENVOLVIMENTO_OCORRENCIA <span class="kw">VALUES</span> (8001,5001,<span class="str">'Vítima'</span>);
+
+<span class="kw">INSERT INTO</span> INQUERITO <span class="kw">VALUES</span>
+(9001,5001,<span class="str">'2026-08-29'</span>,<span class="kw">NULL</span>,<span class="str">'Em investigação'</span>,<span class="str">'Normal'</span>);
+
+<span class="kw">INSERT INTO</span> DEPOIMENTO <span class="kw">VALUES</span>
+(3001,9001,8001,<span class="str">'2026-08-30'</span>,<span class="str">'Relato simulado registrado'</span>);
+
+<span class="kw">INSERT INTO</span> EVIDENCIA <span class="kw">VALUES</span>
+(7001,9001,<span class="str">'Documento'</span>,<span class="str">'Arquivo fictício utilizado para teste'</span>,
+<span class="str">'2026-08-30'</span>,<span class="str">'Em análise'</span>);
+
+<span class="kw">INSERT INTO</span> MOVIMENTACAO <span class="kw">VALUES</span>
+(10001,9001,101,<span class="str">'2026-08-29'</span>,<span class="str">'Distribuição'</span>,<span class="str">'Procedimento distribuído'</span>);</code></pre>
+    </div>
+  </section>
+
+  <section class="card" id="consultas">
+    <h2>Consultas <span class="tag">SELECT</span></h2>
+    <p style="color:var(--muted); margin-top:0.3rem;">Consulta simples:</p>
+    <pre><code><span class="kw">SELECT</span> * <span class="kw">FROM</span> OCORRENCIA;</code></pre>
+
+    <p style="color:var(--muted); margin-top:1rem;">Ocorrência completa (unidade, servidor, natureza, pessoa envolvida):</p>
+    <div class="wrap-x">
+<pre><code><span class="kw">SELECT</span> o.id_ocorrencia, o.data_registro, o.canal_registro,
+    n.descricao <span class="kw">AS</span> natureza, u.nome <span class="kw">AS</span> unidade_policial,
+    s.nome_ficticio <span class="kw">AS</span> servidor_registro, p.nome_ficticio <span class="kw">AS</span> pessoa,
+    eo.papel, o.status
+<span class="kw">FROM</span> OCORRENCIA o
+<span class="kw">INNER JOIN</span> NATUREZA_FATO n <span class="kw">ON</span> o.id_natureza = n.id_natureza
+<span class="kw">INNER JOIN</span> UNIDADE_POLICIAL u <span class="kw">ON</span> o.id_unidade = u.id_unidade
+<span class="kw">INNER JOIN</span> SERVIDOR s <span class="kw">ON</span> o.id_servidor_registro = s.id_servidor
+<span class="kw">INNER JOIN</span> ENVOLVIMENTO_OCORRENCIA eo <span class="kw">ON</span> o.id_ocorrencia = eo.id_ocorrencia
+<span class="kw">INNER JOIN</span> PESSOA p <span class="kw">ON</span> eo.id_pessoa = p.id_pessoa;</code></pre>
+    </div>
+
+    <p style="color:var(--muted); margin-top:1rem;">Inquérito e ocorrência de origem:</p>
+    <div class="wrap-x">
+<pre><code><span class="kw">SELECT</span> i.id_inquerito, i.data_abertura, i.status <span class="kw">AS</span> status_inquerito,
+    i.prioridade, o.id_ocorrencia, o.canal_registro,
+    o.status <span class="kw">AS</span> status_ocorrencia, n.descricao <span class="kw">AS</span> natureza
+<span class="kw">FROM</span> INQUERITO i
+<span class="kw">INNER JOIN</span> OCORRENCIA o <span class="kw">ON</span> i.id_ocorrencia = o.id_ocorrencia
+<span class="kw">INNER JOIN</span> NATUREZA_FATO n <span class="kw">ON</span> o.id_natureza = n.id_natureza;</code></pre>
+    </div>
+
+    <p style="color:var(--muted); margin-top:1rem;">Depoimentos e pessoas:</p>
+    <div class="wrap-x">
+<pre><code><span class="kw">SELECT</span> d.id_depoimento, d.data_depoimento,
+    p.nome_ficticio <span class="kw">AS</span> pessoa, d.resumo_ficticio, i.id_inquerito
+<span class="kw">FROM</span> DEPOIMENTO d
+<span class="kw">INNER JOIN</span> PESSOA p <span class="kw">ON</span> d.id_pessoa = p.id_pessoa
+<span class="kw">INNER JOIN</span> INQUERITO i <span class="kw">ON</span> d.id_inquerito = i.id_inquerito;</code></pre>
+    </div>
+  </section>
+
+  <section class="card" id="update">
+    <h2>Atualização de status <span class="tag">UPDATE</span></h2>
+    <pre><code><span class="kw">UPDATE</span> INQUERITO <span class="kw">SET</span> status = <span class="str">'Concluído'</span>,
+    data_conclusao = <span class="str">'2026-09-10'</span>
+<span class="kw">WHERE</span> id_inquerito = 9001;</code></pre>
+  </section>
+
+  <section class="card" id="delete">
+    <h2>Registro temporário e exclusão <span class="tag">DELETE</span></h2>
+    <pre><code><span class="kw">INSERT INTO</span> EVIDENCIA <span class="kw">VALUES</span>
+(7002,9001,<span class="str">'Documento'</span>, <span class="str">'Registro criado exclusivamente para teste de exclusão'</span>,
+<span class="str">'2026-08-31'</span>,<span class="str">'Em análise'</span>);
+
+<span class="kw">DELETE FROM</span> EVIDENCIA <span class="kw">WHERE</span> id_evidencia = 7002;</code></pre>
+  </section>
+
+  <section class="card" id="gerenciais">
+    <h2>Consultas gerenciais <span class="tag">Relatórios</span></h2>
+    <p style="color:var(--muted); margin-top:0.3rem;">Total de ocorrências por natureza:</p>
+    <pre><code><span class="kw">SELECT</span> n.descricao <span class="kw">AS</span> natureza,
+    <span class="kw">COUNT</span>(o.id_ocorrencia) <span class="kw">AS</span> total_ocorrencias
+<span class="kw">FROM</span> NATUREZA_FATO n
+<span class="kw">INNER JOIN</span> OCORRENCIA o <span class="kw">ON</span> n.id_natureza = o.id_natureza
+<span class="kw">GROUP BY</span> n.descricao
+<span class="kw">ORDER BY</span> total_ocorrencias <span class="kw">DESC</span>;</code></pre>
+
+    <p style="color:var(--muted); margin-top:1rem;">Total de ocorrências por canal de registro:</p>
+    <pre><code><span class="kw">SELECT</span> canal_registro, <span class="kw">COUNT</span>(*) <span class="kw">AS</span> total_ocorrencias
+<span class="kw">FROM</span> OCORRENCIA
+<span class="kw">GROUP BY</span> canal_registro
+<span class="kw">ORDER BY</span> total_ocorrencias <span class="kw">DESC</span>;</code></pre>
+
+    <p style="color:var(--muted); margin-top:1rem;">Total de inquéritos por status:</p>
+    <pre><code><span class="kw">SELECT</span> status, <span class="kw">COUNT</span>(*) <span class="kw">AS</span> total_inqueritos
+<span class="kw">FROM</span> INQUERITO
+<span class="kw">GROUP BY</span> status
+<span class="kw">ORDER BY</span> total_inqueritos <span class="kw">DESC</span>;</code></pre>
+  </section>
+
+  <section class="card" id="auditoria">
+    <h2>Auditoria e inquéritos pendentes <span class="tag">Controle</span></h2>
+    <p style="color:var(--muted); margin-top:0.3rem;">Histórico de movimentações (auditoria):</p>
+    <div class="wrap-x">
+<pre><code><span class="kw">SELECT</span> m.id_movimentacao, m.data_movimentacao, m.tipo_movimentacao,
+    m.descricao, i.id_inquerito, s.nome_ficticio <span class="kw">AS</span> servidor
+<span class="kw">FROM</span> MOVIMENTACAO m
+<span class="kw">INNER JOIN</span> INQUERITO i <span class="kw">ON</span> m.id_inquerito = i.id_inquerito
+<span class="kw">INNER JOIN</span> SERVIDOR s <span class="kw">ON</span> m.id_servidor = s.id_servidor
+<span class="kw">ORDER BY</span> m.data_movimentacao <span class="kw">DESC</span>;</code></pre>
+    </div>
+
+    <p style="color:var(--muted); margin-top:1rem;">Inquéritos sem data de conclusão:</p>
+    <pre><code><span class="kw">SELECT</span> id_inquerito, id_ocorrencia, data_abertura, status, prioridade
+<span class="kw">FROM</span> INQUERITO
+<span class="kw">WHERE</span> data_conclusao <span class="kw">IS NULL</span>;</code></pre>
+  </section>
+
+</main>
+
+<footer>
+  Projeto acadêmico · Banco de dados · Dados de teste fictícios · 52º Distrito Policial - Parque São Jorge
+</footer>
+
+</body>
+</html>
