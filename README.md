@@ -5,7 +5,12 @@
 
 ## Metadados
 
-- **Nomes dos alunos e RGM:** *[preencher — nomes completos e RGM de cada integrante do grupo]*
+- **Nomes dos alunos e RGM:**
+- Enzo Freire dos Santos, RGM: 47806303
+- Eduardo Vinicius Ribeiro Costa, RGM: 048693855
+- Giovanna Ribeiro Souza, RGM: 47952822
+- João Victor da Costa Silva, RGM: 4227238
+- Paulo Henrique Camilo de Pascoa Souza, RGM: 47806745
 
 ## 1. Caracterização da Organização
 *(vale 7,5% — Dimensão Conceitual)*
