@@ -1,0 +1,129 @@
+DER — BOLETIM DE OCORRÊNCIA
+Entidades, chaves e relacionamentos do sistema
+
+Legenda:
+  PK = chave primária
+  FK = chave estrangeira
+  1:N = um para muitos
+  1:0..1 = um para zero ou um
+
+============================================================
+ENTIDADES E ATRIBUTOS
+============================================================
+
+UNIDADE_POLICIAL
+  PK id_unidade
+     nome
+     endereco
+     tipo_unidade
+     cidade
+
+NATUREZA_FATO
+  PK id_natureza
+     descricao
+     gravidade
+
+PESSOA  (entidade generalizada)
+  PK id_pessoa
+     nome
+     documento
+     observacao
+
+  -> generalização / especialização em: SERVIDOR
+
+SERVIDOR  (especialização de PESSOA)
+  PK id_servidor
+  FK id_pessoa
+  FK id_unidade
+     nome
+     cargo
+     matricula
+
+OCORRENCIA
+  PK id_ocorrencia
+  FK id_unidade
+  FK id_natureza
+  FK id_servidor_registro
+     data_registro
+     localidade
+     status
+
+ENVOLVIMENTO
+  PK id_envolvimento
+  FK id_ocorrencia
+  FK id_pessoa
+     papel
+
+INQUERITO
+  PK id_inquerito
+  FK id_ocorrencia
+     data_abertura
+     data_conclusao
+     status
+     prioridade
+
+DEPOIMENTO
+  PK id_depoimento
+  FK id_inquerito
+  FK id_pessoa
+     data_depoimento
+     resumo
+
+EVIDENCIA
+  PK id_evidencia
+  FK id_inquerito
+     tipo_evidencia
+     descricao
+     data_apreensao
+     status_custodia
+
+MOVIMENTACAO
+  PK id_movimentacao
+  FK id_inquerito
+  FK id_servidor
+     data_movimentacao
+     tipo_movimentacao
+     descricao
+
+============================================================
+RELACIONAMENTOS
+============================================================
+
+UNIDADE_POLICIAL   (1) ---- (N) OCORRENCIA
+NATUREZA_FATO      (1) ---- (N) OCORRENCIA
+OCORRENCIA         (1) ---- (N) ENVOLVIMENTO
+PESSOA             (1) ---- (N) ENVOLVIMENTO
+OCORRENCIA         (1) ---- (N) INQUERITO
+INQUERITO          (1) ---- (N) DEPOIMENTO
+PESSOA             (1) ---- (N) DEPOIMENTO
+INQUERITO          (1) ---- (N) EVIDENCIA
+INQUERITO          (1) ---- (N) MOVIMENTACAO
+SERVIDOR           (1) ---- (N) MOVIMENTACAO
+UNIDADE_POLICIAL   (1) ---- (N) SERVIDOR
+PESSOA             (1) ---- (1) SERVIDOR   [generalização/especialização]
+
+============================================================
+RESUMO DO FLUXO DE DEPENDÊNCIA ENTRE ENTIDADES (leitura em texto)
+============================================================
+
+UNIDADE_POLICIAL
+  -> origina SERVIDOR (servidores lotados na unidade)
+  -> origina OCORRENCIA (ocorrências registradas na unidade)
+
+NATUREZA_FATO
+  -> classifica OCORRENCIA
+
+PESSOA
+  -> generaliza/especializa em SERVIDOR
+  -> participa de OCORRENCIA via ENVOLVIMENTO (papel: vítima, testemunha etc.)
+  -> presta DEPOIMENTO
+
+OCORRENCIA
+  -> registrada por SERVIDOR (id_servidor_registro)
+  -> pode originar um INQUERITO
+  -> tem PESSOAS envolvidas via ENVOLVIMENTO
+
+INQUERITO
+  -> reúne DEPOIMENTOS (de PESSOAS)
+  -> reúne EVIDENCIAS
+  -> registra MOVIMENTACOES (feitas por SERVIDOR)

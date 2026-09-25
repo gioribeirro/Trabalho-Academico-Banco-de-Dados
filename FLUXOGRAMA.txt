@@ -1,0 +1,74 @@
+FLUXOGRAMA — REGISTRO E ACOMPANHAMENTO DE OCORRÊNCIA
+Fluxo operacional do sistema
+
+Etapas principais: Registro > Análise > Abertura do inquérito >
+                    Diligências > Atualização > Conclusão
+
+============================================================
+FLUXO PASSO A PASSO
+============================================================
+
+[INÍCIO]
+   |
+   v
+1. REGISTRAR OCORRÊNCIA
+   - Informar unidade, servidor responsável, data, localidade
+     e natureza do fato.
+   |
+   v
+2. HÁ INDÍCIOS PARA ABRIR INQUÉRITO?  (decisão)
+   |
+   |-- NÃO --> Manter ocorrência em análise --> registro encerrado --> [FIM]
+   |
+   |-- SIM
+        |
+        v
+3. ABRIR INQUÉRITO
+   - Vincular o inquérito à ocorrência e registrar status e prioridade.
+   |
+   v
+4. DISTRIBUIR PARA SERVIDOR RESPONSÁVEL
+   - Registrar a movimentação de distribuição.
+   |
+   v
+5. REALIZAR DILIGÊNCIAS
+   - Cadastrar pessoas e envolvimentos
+   - Registrar depoimentos
+   - Anexar evidências
+   - Atualizar movimentações
+   |
+   v
+6. INVESTIGAÇÃO CONCLUÍDA?  (decisão)
+   |
+   |-- NÃO --> Continuar diligências --> (retorna ao passo 5)
+   |
+   |-- SIM
+        |
+        v
+7. REGISTRAR CONCLUSÃO DO INQUÉRITO
+   |
+   v
+[FIM]
+
+============================================================
+RESUMO EM TEXTO CORRIDO
+============================================================
+
+O fluxo começa com o registro da ocorrência, informando unidade,
+servidor responsável, data, localidade e natureza do fato.
+
+Em seguida, verifica-se se há indícios suficientes para abrir um
+inquérito. Se não houver, a ocorrência permanece em análise e o
+registro é encerrado (fim do fluxo). Se houver indícios, o inquérito
+é aberto, vinculado à ocorrência de origem, com status e prioridade
+definidos.
+
+Depois de aberto, o inquérito é distribuído a um servidor
+responsável, e essa distribuição é registrada como uma movimentação.
+A partir daí, são realizadas as diligências: cadastro de pessoas e
+seus envolvimentos, registro de depoimentos, anexação de evidências
+e atualização de movimentações.
+
+Ao final de cada rodada de diligências, verifica-se se a investigação
+já foi concluída. Caso não, o ciclo de diligências se repete. Caso
+sim, é registrada a conclusão do inquérito, encerrando o fluxo.
