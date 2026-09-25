@@ -49,9 +49,8 @@ OCORRENCIA
      status
 
 ENVOLVIMENTO
-  PK id_envolvimento
-  FK id_ocorrencia
-  FK id_pessoa
+  FK / FK id_ocorrencia
+  FK / FK id_pessoa
      papel
 
 INQUERITO
