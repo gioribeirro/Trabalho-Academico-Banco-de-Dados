@@ -21,8 +21,6 @@
 - **Justificativa da escolha:** A organização foi escolhida por ser uma instituição pública com processos bem delimitados (registro de ocorrência → possível abertura de inquérito → instrução → conclusão), volume de dados suficiente para sustentar um modelo relacional com múltiplas entidades relacionadas, e por o grupo ter conseguido acesso real a servidores da unidade para a pesquisa de campo (entrevista com a agente Ivani e complemento do responsável pela unidade).
 - **Evidências da organização:** R. Dr. Coryntho Baldoíno Costa, 400 - Vila Zilda, São Paulo - SP, 03069-070
 
-> **Nota sobre privacidade:** por se tratar de uma unidade policial, os nomes dos servidores e das pessoas envolvidas nas ocorrências usados nos exemplos deste projeto (dicionário de dados, script SQL) são **fictícios**, mesmo quando baseados em estrutura observada na visita de campo.
-
 ---
 
 ## 2. Processos de Negócio
@@ -214,8 +212,15 @@
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-- *[Anexar aqui a imagem do DER, representando entidades, atributos, relacionamentos e cardinalidades, conforme o modelo descrito na Seção 6.]*
+*(vale 20% — é o item de maior peso da entrega)*
 
+- Anexe o DER (em imagem).
+- O diagrama deve representar corretamente:
+  - Entidades
+  - Atributos
+  - Relacionamentos
+  - **Cardinalidades**
+- O modelo deve ser **consistente** e já demonstrar potencial de **escalabilidade e integração** (pensando nas próximas etapas do projeto).
 ---
 
 ## 8. Justificativa Técnica
